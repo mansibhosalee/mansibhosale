@@ -1,0 +1,326 @@
+1)Demonstrate basic Git commands
+
+git --version
+
+git config --global user.name "usernewncrd"
+git config --global user.email “symca669@gmail.com”
+
+git config --global user.name "usernewncrd"
+git config --global user.email “symca669@gmail.com”
+
+git init
+echo "Hello World">file.txt
+git add .
+git commit -m "Initial Commit"
+git status
+git log
+
+2) Create and fork repositories in Git Hub. Apply branch, merge and rebase concepts.
+
+Create repository
+mkdir fork_test && cd fork_test 
+(fork public repo)
+git clone https://github.com/YadneshTeli/bookstoreweb-fork.git
+git checkout -b feature
+echo "Feature added" >> newfile.txt 
+git add .
+ git commit -m "Added new feature"
+git checkout master 
+git merge feature
+git checkout feature
+ git rebase master
+git push origin feature 
+git checkout master 
+git push origin master
+
+3) Demonstrate Git for Collaboration
+
+Using Git for Collaboration 
+
+git clone https://github.com/YadneshTeli/untitle-webapp.git
+cd team-repo
+git checkout -b bug-fix 
+echo "Bug fixed" >> bug.txt
+git add .
+git commit -m "Fixed a bug"
+git push origin bug-fix
+
+
+4) Demonstrate Collaborating and cloning using Git
+
+git clone https://github.com/YadneshTeli/tesst.git
+cd ….(cloning into …)
+git checkout -b update-readme
+echo "Added a line" >> README.md 
+git add README.md
+ git commit -m "Updated README"
+git push origin update-readme
+
+(create pull request on GitHub
+and then merge)
+
+5) Using GitLab Web IDE 
+
+Sign up at https://gitlab.com
+2. Create a project.
+3. Click on Web IDE in your repository. 
+
+Create a file (index.html):
+<html>
+<body>
+<h1>Hello from GitLab</h1>
+</body>
+</html> 
+Click Commit and push changes: 
+
+6) Demonstrate CI/CD Workflow in GitLab using .py, .bash, .java
+file 
+
+(Bash )
+echo "This is from my bash script"
+touch myFile.txt
+echo "Helloo 69" > myFile.txt
+echo "Testt"
+stages:
+ - build
+bash_execute:
+ stage: build
+ script:
+ - bash ./basic.sh
+
+
+
+7) Demonstrate setting Jenkins CI/CD pipeline.
+
+1. Install Jenkins (visit https://www.jenkins.io)
+ 2. Run Jenkins: http://localhost:8080
+Create new pipeline
+Multibranch pipeline 
+source code management – git
+write script
+save  build now  console output 
+pipeline {
+ agent any // Defines where the pipeline runs
+ stages {
+ stage('Build') { // Defines a step in the pipeline
+ steps {
+ echo 'Building the project...' // Print message to console
+ }
+ }
+ stage('Test') {
+ steps {
+ echo 'Running tests...'
+ }
+ }
+ stage('Deploy') {
+ steps {
+ echo 'Deploying the application...'
+ }
+ }
+ }
+ post {
+ success {
+ echo 'Pipeline completed successfully!' // Runs if the pipeline is successful
+ }
+ failure {
+ echo 'Pipeline failed!' // Runs if any stage fails
+ }
+ }
+}
+
+
+8) Demonstrate Setting up of a CI/CD pipeline to build and deploy a web application to a local HTTP server
+
+Create a new Dynamic web project (Eclipse IDE for enterprise java and web developers)
+Index.jsp :
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<html>
+<head>
+ <title>CookiesDemo</title>
+</head>
+<body>
+ <h2>CookiesDemo - </h2>
+ <form action="CookiesDemo.jsp" method="get">
+ Name - <input type="text" name="usernm">
+ <input type="submit" value="Submit Query">
+ </form>
+</body>
+</html>
+
+
+CookiesDemo.jsp:
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+ pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.Cookie" %>
+s<%@ page import="java.io.*" %>
+<html>
+<head>
+ <title>Session Management using Cookies</title>
+</head>
+<body>
+ <h2>Session Management using Cookies</h2>
+ <%
+ String username = request.getParameter("usernm");
+ Cookie[] cookies = request.getCookies();
+ int visitCount = 0;
+ boolean userExists = false;
+ if (cookies != null) {
+ for (Cookie cookie : cookies) {
+ if (cookie.getName().equals("visitCount")) {
+ visitCount = Integer.parseInt(cookie.getValue());
+ }
+ if (cookie.getName().equals("username")) {
+ userExists = true;
+ }
+ }
+ }
+ visitCount++;
+ Cookie visitCookie = new Cookie("visitCount", String.valueOf(visitCount));
+ visitCookie.setMaxAge(60 * 60 * 24);
+ response.addCookie(visitCookie);
+ if (!userExists && username != null) {
+ Cookie userCookie = new Cookie("username", username);
+ userCookie.setMaxAge(60 * 60 * 24);
+ response.addCookie(userCookie);
+ }
+ %>
+ <p>Hello <%= username != null ? username : "Guest" %> You have hit the page <%= visitCount %>
+time(s)</p>
+ <a href="CookiesDemo.jsp?usernm=<%= username %>">Hit Again</a>
+</body>
+</html>
+
+pipeline 
+source code management – git
+write script
+Add Pipeline Script > Script:
+
+pipeline {
+ agent any
+ stages {
+ stage('Checkout Code') {
+ steps {
+ script {
+ git branch: 'master', url: 'https://github.com/YadneshTeli/DevopsJenkins'
+ }
+ }
+ }
+ stage('Verify Files') {
+ steps {
+ bat 'dir /S /B'
+ }
+ }
+ stage('Deploy') {
+ steps {
+ script {
+ def srcPath = "CookiesDemo/src/main/webapp"
+ def destPath = "C:\\Program Files\\Apache Software Foundation\\Tomcat
+11.0\\webapps\\Index"
+ if (fileExists(srcPath)) {
+ bat "xcopy /E /I \"${srcPath}\" \"${destPath}\""
+ } else {
+ error "Source directory ${srcPath} does not exist!"
+ }
+ }
+ }
+ }
+ }
+}
+Open Manager app from the Tomcat panel by entering username and password
+Click on the link present in the Jenkin’s Console Output –
+
+
+
+9) Demonstrate basic Docker commands
+
+docker --version
+docker run -d -p 8081:80 --name nginx_vol -v mydata:/usr/share/nginx/html nginx
+docker pull nginx
+docker images
+docker run -d -p 8080:80 --name mynginx nginx
+docker ps
+docker cp index.html mynginx:/usr/share/nginx/html/
+docker run -d -p 8081:80 --name nginx_vol -v mydata:/usr/share/nginx/html nginx
+docker volume create mydata
+docker volume ls
+docker rm -f mynginx
+docker rmi nginx
+
+10) Develop a simple containerized application using Docker Develop a Simple Containerized Application using Docker(hello world)
+
+Index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hello From Docker Container</h1>
+  <h1>Hello from User</h1>
+</body>
+</html>
+Docker file
+FROM nginx:latest
+COPY index.html /usr/share/nginx/html/index.html
+
+Terminal
+docker build -t my-webapp.
+docker run -d -p 8080:80 --name webapp-container my-webapp
+docker ps
+docker stop webapp-container
+docker rm webapp-container
+docker rmi my-webapp
+
+OR
+Cmd
+
+docker --version
+
+docker pull nginx
+
+docker images
+
+docker run -d -p 8080:80 --name mynginx nginx
+
+docker ps
+
+Create index.html file locally
+
+docker cp index.html mynginx:/usr/share/nginx/html/
+
+docker cp mynginx:/usr/share/nginx/html/index.html .
+
+docker volume create mydata
+
+docker run -d -p 8081:80 --name nginx_vol -v mydata:/usr/share/nginx/html nginx
+
+docker volume ls
+
+docker rm -f mynginx
+docker rmi nginx
+
+
+
+11) Demonstrate Ansible Playbooks 
+
+install_nginx.yml:
+
+- name: Install Nginx
+apt:
+name: nginx
+state: present
+update_cache: yes
+- name: Start Nginx
+service:
+name: nginx
+state: started
+enabled: true 
+
+ansible-playbook -i hosts.ini install_nginx.yml 
+
+
+Using GitLab Web IDE(5 pract)
