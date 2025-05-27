@@ -1,3 +1,40 @@
+Push,Pull
+
+git init
+git config --global user.name
+git config --global user.email
+git status
+git add test.txt
+ git status
+git add test.txt
+git status
+ git commit -m "initial commit"
+git status
+git add.
+git remote add origin https://github.com/mansibhosalee/mansibhosale.git
+git push origin master
+git pull origin master
+git fetch origin master
+git pull origin master
+
+Fork,Clone
+
+git clone https://github.com/ameybhogle12/Weather-Website.git
+cd Weather-Website
+(make changes in index file)
+git status
+git add src/main/webapp/index.html(copy url)
+git commit -m "test commit"
+git checkout -b test
+git push origin test
+git checkout main
+git push origin main
+ git pull origin main
+(fork)
+git push origin main
+git pull origin main
+
+
 1)Demonstrate basic Git commands
 
 git --version
